@@ -5,7 +5,9 @@ return (
 <div>
 <nav>
 <NavLink to="/" end>Home</NavLink>
-<NavLink to="/about">About</NavLink>
+<NavLink to="/login">Login</NavLink>
+<NavLink to="/tasks">tasks</NavLink>
+<NavLink to="/stats">stats</NavLink>
 </nav>
 <Outlet />
 </div>);}

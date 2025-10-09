@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import '..style/Liste.css';
+import { useState } from "react";
+import '../style/Tasks.css';
+import React from 'react';
 
-function Liste() {
+const Tasks: React.FC = () => {
   const [liste, setListe] = useState([
   {
     id: 1,
@@ -198,4 +199,4 @@ function Liste() {
   );
 }
 
-export default Liste;
+export default Tasks;
