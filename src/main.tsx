@@ -8,16 +8,17 @@ import Tasks from './pages/Tasks';
 import Stats from './pages/Stats';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import ProtectedRoute from './ProtectedRoute';
 const router = createBrowserRouter([
 {
 path: '/',
 element: <App />, // layout racine
 children: [
-{ index: true, element: <Home /> },
-{ path: 'about', element: <About /> },
-{ path: 'login', element: <Login /> },
-{ path: 'tasks', element: <Tasks /> },
-{ path: 'stats', element: <Stats /> },
+{ index: true, element: (<ProtectedRoute><Home /></ProtectedRoute>) },
+{ path: 'about', element:(<ProtectedRoute><About /></ProtectedRoute>) },
+{ path: 'login', element: <Login />},
+{ path: 'tasks', element:(<ProtectedRoute><Tasks /></ProtectedRoute>)},
+{ path: 'stats', element: (<ProtectedRoute><Stats /></ProtectedRoute>)},
 { path: '*', element: <NotFound/> },
 ],
 },
