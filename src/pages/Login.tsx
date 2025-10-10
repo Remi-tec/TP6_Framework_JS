@@ -9,6 +9,13 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Liste des utilisateurs autorisés
+  const users = [
+    { id: 1, username: "admin", password: "1234" },
+    { id: 2, username: "remi", password: "123" },
+    { id: 3, username: "teddy", password: "321" }
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -22,10 +29,13 @@ const LoginPage = () => {
     setTimeout(() => {
       setLoading(false);
 
-      // Exemple simple (tu remplaceras par un vrai appel API)
-      if (username === "admin" && password === "1234") {
+      // Vérifier si l'utilisateur existe dans la liste
+      const user = users.find(u => u.username === username && u.password === password);
+      
+      if (user) {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("username", username);
+        localStorage.setItem("userId", user.id.toString());
         navigate("/dashboard");
       } else {
         setError("Identifiant ou mot de passe incorrect.");
@@ -34,38 +44,34 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Se connecter</h2>
-
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Connexion</h2>
+        
+        {error && <div className="error-message">{error}</div>}
+        
         <div className="input-group">
-          <label>Identifiant</label>
-          <div className="input-wrapper">
-            <span className="icon">👤</span>
-            <input
-              type="text"
-              placeholder="Entrez votre identifiant"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
+          <label htmlFor="username">Nom d'utilisateur</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={loading}
+          />
         </div>
-
+        
         <div className="input-group">
-          <label>Mot de passe</label>
-          <div className="input-wrapper">
-            <span className="icon">🔒</span>
-            <input
-              type="password"
-              placeholder="Entrez votre mot de passe"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <label htmlFor="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+          />
         </div>
-
-        {error && <p className="error-message">{error}</p>}
-
+        
         <button type="submit" className="login-button" disabled={loading}>
           {loading ? "Connexion..." : "Se connecter"}
         </button>
