@@ -6,6 +6,7 @@ import { useTasks } from "../context/TasksContext";
 export default function NewTask() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [error, setError] = useState("");
   const { addTask } = useTasks();
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function NewTask() {
       setError("Le titre doit contenir au moins 3 caractères.");
       return;
     }
-    addTask({ title, description });
+    addTask({ title, description, dueDate });
     navigate("/tasks");
   }
 
@@ -50,6 +51,16 @@ export default function NewTask() {
               rows="4"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="dueDate">Date d’échéance</label>
+            <input
+              id="dueDate"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
             />
           </div>
 

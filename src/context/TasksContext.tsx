@@ -17,29 +17,45 @@ export function TasksProvider({ children }) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // ➕ Ajouter une tâche
   const addTask = (task) => {
+    const now = new Date().toISOString();
     setTasks((prev) => [
       ...prev,
-      { id: Date.now(), ...task, status: "à faire" },
+      {
+        id: Date.now(),
+        ...task,
+        status: "à faire",
+        createdAt: now,
+        updatedAt: now,
+      },
     ]);
   };
 
+  // 🔄 Mettre à jour une tâche
   const updateTask = (id, updates) => {
+    const now = new Date().toISOString();
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, ...updates } : t))
+      prev.map((t) =>
+        t.id === id ? { ...t, ...updates, updatedAt: now } : t
+      )
     );
   };
 
+  // 🗑️ Supprimer
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   };
 
   const editTaskTitle = (id, newTitle) => {
+    const now = new Date().toISOString();
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, title: newTitle } : t))
+      prev.map((t) =>
+        t.id === id ? { ...t, title: newTitle, updatedAt: now } : t
+      )
     );
   };
-  
+
   return (
     <TasksContext.Provider
       value={{ tasks, addTask, updateTask, deleteTask, editTaskTitle }}
@@ -47,7 +63,4 @@ export function TasksProvider({ children }) {
       {children}
     </TasksContext.Provider>
   );
-};
-// src/context/TasksContext.jsx (ajout d'une fonction)
-
-  
+}
